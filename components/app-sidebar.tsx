@@ -4,7 +4,6 @@ import * as React from "react"
 import {
   BookOpen,
   BookOpenCheck,
-  Bot,
   Command,
   Compass,
   Settings2,
