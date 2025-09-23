@@ -42,7 +42,7 @@ export function SignInForm({
               <Input id="password" type="password" placeholder="•••••••••••" required />
             </div>
             <div className="flex flex-col items-start gap-3">
-              <Button type="submit" className="w-full">
+              <Button size={"lg"} type="submit" className="w-full">
                 Sign in
               </Button>
             </div>
