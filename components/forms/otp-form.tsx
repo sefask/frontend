@@ -100,7 +100,7 @@ export function OTPForm({
               </div>
               <span className="sr-only">Sefask</span>
             </Link>
-            <h1 className="text-xl font-bold">Email verification</h1>
+            <h1 className="text-xl font-bold">Please verify your email</h1>
             <div className="text-center text-sm">
               Please enter the OTP sent to
               <p className="font-bold underline underline-offset-4">example@email.com</p>
@@ -108,7 +108,7 @@ export function OTPForm({
           </div>
           <div className="flex flex-col gap-6">
             <div className="grid gap-3">
-              <Label htmlFor="otp">OTP</Label>
+              <Label htmlFor="otp" className="sr-only">OTP</Label>
               <div className="grid grid-cols-6 gap-3">
                 {Array.from({ length: 6 }).map((_, index) => (
                   <Input

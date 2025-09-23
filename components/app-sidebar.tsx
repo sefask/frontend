@@ -3,10 +3,10 @@
 import * as React from "react"
 import {
   Bell,
-  BookOpen,
-  BookOpenCheck,
   Command,
   Compass,
+  FileCheck,
+  FileQuestionMark,
   Settings2,
 } from "lucide-react"
 
@@ -39,17 +39,22 @@ const data = {
     {
       title: "Tests",
       url: "#",
-      icon: BookOpenCheck,
+      icon: FileQuestionMark,
       items: [
+        {
+          title: "All tests",
+          url: "#",
+        },
         {
           title: "Create new test",
           url: "#",
         },
-        {
-          title: "View responses",
-          url: "#",
-        },
       ],
+    },
+    {
+      title: "Responses",
+      url: "#",
+      icon: FileCheck,
     },
     {
       title: "Notifications",
@@ -80,8 +85,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <Command className="size-4 text-primary-foreground" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
+                  <span className="truncate font-medium">Sefask</span>
+                  <span className="truncate text-xs">Online tests</span>
                 </div>
               </Link>
             </SidebarMenuButton>

@@ -3,6 +3,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.bar::-webkit-scrollbar {
+  display: none;
+}
+
 .geist-sans {
   font-family: var(--font-geist-sans);
 }
