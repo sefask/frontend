@@ -1,7 +1,6 @@
 import Navbar from "@/components/root/Navbar";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { Home as HomeIcon, Plus } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -16,9 +15,12 @@ export default function Home() {
           Working on something new to make online exams way more authentic. <br />
           Join our waitlist to be the first to know when it gets launched.
         </p>
-        <Button className='rounded-none cursor-pointer'>
-          <Plus /> Join waitlist
-        </Button>      </div>
+        <Button className='cursor-pointer'>
+          <Link href="/auth/signup">
+            Try it out
+          </Link>
+        </Button>
+      </div>
       <div className="bg-card h-[230px] w-6xl"></div>
     </main >
   );
