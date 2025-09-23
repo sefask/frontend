@@ -40,6 +40,10 @@ export function SignUpForm({
         <Button type="submit" size={"lg"} className="w-full cursor-pointer">
           Sign up
         </Button>
+        <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
+          By clicking sign up, you agree to our <a href="#">Terms of Service</a>{" "}
+          and <a href="#">Privacy Policy</a>.
+        </div>
       </div>
       <div className="text-center text-sm">
         Don&apos;t have an account?{" "}
