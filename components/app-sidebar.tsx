@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import {
+  Bell,
   BookOpen,
   BookOpenCheck,
   Command,
@@ -48,43 +49,18 @@ const data = {
           title: "View responses",
           url: "#",
         },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
       ],
     },
     {
-      title: "Documentation",
+      title: "Notifications",
       url: "#",
-      icon: BookOpen,
+      icon: Bell,
+      count: 12,
     },
     {
       title: "Settings",
       url: "#",
       icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
     },
   ],
 }

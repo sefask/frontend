@@ -19,6 +19,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
+import { Button } from "./ui/button"
 
 export function NavMain({
   items,
@@ -32,6 +33,7 @@ export function NavMain({
       title: string
       url: string
     }[]
+    count?: number
   }[]
 }) {
   return (
@@ -40,7 +42,7 @@ export function NavMain({
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
-            <SidebarMenuItem>
+            <SidebarMenuItem className={`${item.count ? "flex items-center gap-2" : ""}`}>
               <SidebarMenuButton asChild tooltip={item.title}>
                 <Link href={item.url}>
                   <item.icon />
@@ -69,6 +71,16 @@ export function NavMain({
                     </SidebarMenuSub>
                   </CollapsibleContent>
                 </>
+              ) : null}
+              {item?.count ? (
+                <Button
+                  size="icon"
+                  className="size-8 group-data-[collapsible=icon]:opacity-0"
+                  variant="outline"
+                  asChild
+                >
+                  <Link href={"#"}>{item.count}</Link>
+                </Button>
               ) : null}
             </SidebarMenuItem>
           </Collapsible>
