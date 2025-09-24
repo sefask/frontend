@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.text-x6l {
+    @apply text-6xl max-lg:text-5xl max-md:text-4xl max-sm:text-3xl;
+}

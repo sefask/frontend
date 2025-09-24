@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Bricolage_Grotesque } from "next/font/google";
+import "./fonts.css";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -39,7 +40,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-
           {children}
         </ThemeProvider>
       </body>

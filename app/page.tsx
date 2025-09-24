@@ -4,10 +4,10 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="w-full flex flex-col items-center justify-center">
+    <main className="w-full flex flex-col overflow-hidden items-center justify-center">
       <Navbar />
-      <div className="pt-36 pb-28 flex flex-col gap-6 items-center justify-center">
-        <h1 className="text-foreground bricolage text-6xl text-center font-bold">
+      <div className="pt-36 pb-28 px-5 flex flex-col gap-6 items-center justify-center">
+        <h1 className="text-foreground bricolage text-x6l text-center font-bold">
           Online tests <br />
           the way they should be
         </h1>
