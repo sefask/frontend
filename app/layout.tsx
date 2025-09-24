@@ -31,6 +31,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              document.documentElement.classList.add('no-transitions');
+              setTimeout(() => {
+                document.documentElement.classList.remove('no-transitions');
+              }, 100);
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${bricolageGrotesque.variable} ${geistMono.variable} geist-sans antialiased`}
       >
@@ -38,7 +50,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="system"
           enableSystem
-          disableTransitionOnChange
+          disableTransitionOnChange={false}
         >
           {children}
         </ThemeProvider>

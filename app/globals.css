@@ -132,7 +132,24 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Smooth transitions for all theme-dependent elements */
+  *,
+  *::before,
+  *::after {
+    transition: background-color 0.3s
+  }
+
+  /* Prevent transitions on page load */
+  html.no-transitions *,
+  html.no-transitions *::before,
+  html.no-transitions *::after {
+    transition: none !important;
   }
 }

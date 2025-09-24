@@ -21,7 +21,7 @@ export default function Home() {
           </Link>
         </Button>
       </div>
-      <div className="bg-card h-[230px] w-6xl"></div>
+      <div className="bg-muted h-[230px] w-6xl"></div>
     </main >
   );
 }
