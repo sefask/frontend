@@ -3,8 +3,16 @@
 
 @custom-variant dark (&:is(.dark *));
 
-.bar::-webkit-scrollbar {
-  display: none;
+/* Scroll bar customization */
+::-webkit-scrollbar {
+  width: 8px;
+  display: block;
+  background-color: var(--muted);
+  border-left: 1px solid var(--border);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
 }
 
 .geist-sans {
