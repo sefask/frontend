@@ -8,6 +8,7 @@ import {
   FileCheck,
   FileQuestionMark,
   Settings2,
+  User,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -82,11 +83,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton size="lg" asChild>
               <Link href="">
                 <div className="bg-primary flex aspect-square size-8 items-center justify-center">
-                  <Command className="size-4 text-primary-foreground" />
+                  <User className="size-4 text-primary-foreground" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">Sefask</span>
-                  <span className="truncate text-xs">Online tests</span>
+                  <span className="truncate text-xs">Personal account</span>
                 </div>
               </Link>
             </SidebarMenuButton>
