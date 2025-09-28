@@ -43,11 +43,11 @@ const chartConfig = {
 
 export function ChartAreaGradient() {
   return (
-    <Card>
+    <Card className="col-span-2 flex flex-col justify-between">
       <CardHeader>
         <CardTitle>Responses Chart</CardTitle>
         <CardDescription>
-          Responses over the last week
+          Responses over the last 7 days
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -73,24 +73,24 @@ export function ChartAreaGradient() {
               <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-desktop)"
+                  stopColor="var(--color-primary)"
                   stopOpacity={0.8}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-desktop)"
+                  stopColor="var(--color-primary)"
                   stopOpacity={0.1}
                 />
               </linearGradient>
               <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-mobile)"
+                  stopColor="var(--color-primary)"
                   stopOpacity={0.8}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-mobile)"
+                  stopColor="var(--color-primary)"
                   stopOpacity={0.1}
                 />
               </linearGradient>
@@ -100,7 +100,7 @@ export function ChartAreaGradient() {
               type="natural"
               fill="url(#fillDesktop)"
               fillOpacity={0.4}
-              stroke="var(--color-desktop)"
+              stroke="var(--color-primary)"
               stackId="a"
             />
           </AreaChart>
