@@ -22,9 +22,11 @@ const Navbar: React.FC = () => {
                     <h1 className='font-bold text-lg geist-mono'>Sefask</h1>
                 </div>
                 <div className='flex items-center gap-2'>
-                    <Button variant={"ghost"} className='rounded-none transition duration-300 cursor-pointer'>
-                        <Star />
-                        <span className='max-md:sr-only'>Star</span>
+                    <Button variant={"ghost"} className='rounded-none transition duration-300 cursor-pointer' asChild>
+                        <Link href={"https://github.com/sefask/frontend"} target='_blank'>
+                            <Star />
+                            <span className='max-md:sr-only'>Star</span>
+                        </Link>
                     </Button>
                     <Button className='cursor-pointer' asChild>
                         <Link href="/auth/signup">
