@@ -149,7 +149,6 @@ export function SectionCards() {
                         defaultMonth={dates[0]}
                         required
                         selected={dates}
-                        onSelect={setDates}
                         max={5}
                         className="border shadow-sm w-full"
                     />
