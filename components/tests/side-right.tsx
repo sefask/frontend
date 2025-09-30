@@ -35,12 +35,12 @@ import { Question } from "@/app/user/tests/new/page"
 interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
     selectedQuestion?: Question
     onUpdateQuestion?: (id: string, updates: Partial<Question>) => void
-    onAddQuestion?: (type: Question['type']) => void
-}
-
-export function SidebarRight({
+    onChangeQuestionType?: (id: string, newType: Question['type']) => void
+    onAddQuestion?: () => void
+}export function SidebarRight({
     selectedQuestion,
     onUpdateQuestion,
+    onChangeQuestionType,
     onAddQuestion,
     ...props
 }: SidebarRightProps) {
@@ -112,22 +112,7 @@ export function SidebarRight({
                         <p className="text-sm text-muted-foreground mb-4">
                             Click on a question in the main area to edit it, or add a new question.
                         </p>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button size="sm">Add Question</Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem onClick={() => onAddQuestion?.('multiple-choice')}>
-                                    Multiple Choice
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => onAddQuestion?.('true-false')}>
-                                    True/False
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => onAddQuestion?.('short-answer')}>
-                                    Short Answer
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <Button size="sm" onClick={() => onAddQuestion?.()}>Add Question</Button>
                     </div>
                 ) : (
                     <div className="space-y-6">
@@ -143,7 +128,23 @@ export function SidebarRight({
                             />
                         </div>
 
-                        {/* Points */}
+                        {/* Question Type */}
+                        <div className="space-y-2">
+                            <Label htmlFor="question-type">Question Type</Label>
+                            <Select
+                                value={selectedQuestion.type}
+                                onValueChange={(value: Question['type']) => onChangeQuestionType?.(selectedQuestion.id, value)}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="short-answer">Short Answer</SelectItem>
+                                    <SelectItem value="multiple-choice">Multiple Choice</SelectItem>
+                                    <SelectItem value="true-false">True/False</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>                        {/* Points */}
                         <div className="space-y-2">
                             <Label htmlFor="points">Points</Label>
                             <Input

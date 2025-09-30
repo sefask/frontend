@@ -17,15 +17,13 @@ const page = () => {
     const [questions, setQuestions] = useState<Question[]>([])
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null)
 
-    const addQuestion = (type: Question['type']) => {
+    const addQuestion = () => {
         const newQuestion: Question = {
             id: `q-${Date.now()}`,
-            type,
+            type: 'short-answer',
             text: '',
             points: 1,
-            ...(type === 'multiple-choice' && { options: ['', '', '', ''], correctAnswer: 0 }),
-            ...(type === 'true-false' && { correctAnswer: 'true' }),
-            ...(type === 'short-answer' && { correctAnswer: '' })
+            correctAnswer: ''
         }
         setQuestions(prev => [...prev, newQuestion])
         setSelectedQuestionId(newQuestion.id)
@@ -33,6 +31,39 @@ const page = () => {
 
     const updateQuestion = (id: string, updates: Partial<Question>) => {
         setQuestions(prev => prev.map(q => q.id === id ? { ...q, ...updates } : q))
+    }
+
+    const changeQuestionType = (id: string, newType: Question['type']) => {
+        setQuestions(prev => prev.map(q => {
+            if (q.id === id) {
+                const baseQuestion = { ...q, type: newType }
+
+                // Set appropriate defaults based on new type
+                switch (newType) {
+                    case 'multiple-choice':
+                        return {
+                            ...baseQuestion,
+                            options: ['', '', '', ''],
+                            correctAnswer: 0
+                        }
+                    case 'true-false':
+                        return {
+                            ...baseQuestion,
+                            options: undefined,
+                            correctAnswer: 'true'
+                        }
+                    case 'short-answer':
+                        return {
+                            ...baseQuestion,
+                            options: undefined,
+                            correctAnswer: ''
+                        }
+                    default:
+                        return baseQuestion
+                }
+            }
+            return q
+        }))
     }
 
     const deleteQuestion = (id: string) => {
@@ -74,6 +105,7 @@ const page = () => {
             <SidebarRight
                 selectedQuestion={selectedQuestion}
                 onUpdateQuestion={updateQuestion}
+                onChangeQuestionType={changeQuestionType}
                 onAddQuestion={addQuestion}
             />
         </SidebarProvider>
