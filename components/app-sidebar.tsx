@@ -33,22 +33,22 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/user/dashboard",
       icon: Compass,
       isActive: true,
     },
     {
       title: "Tests",
-      url: "/tests",
+      url: "/user/tests",
       icon: FileQuestionMark,
       items: [
         {
           title: "All tests",
-          url: "/tests",
+          url: "/user/tests",
         },
         {
           title: "Create new test",
-          url: "/tests/new",
+          url: "/user/tests/new",
         },
       ],
     },
