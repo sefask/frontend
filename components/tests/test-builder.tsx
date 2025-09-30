@@ -9,7 +9,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Question } from "@/app/user/tests/new/page"
+import { Question } from "@/components/tests/test-builder-container"
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd"
 
 interface TestBuilderProps {
@@ -98,7 +98,7 @@ interface TestBuilderProps {
                                                         <div className="flex items-center gap-3">
                                                             <div
                                                                 {...provided.dragHandleProps}
-                                                                className="cursor-grab hover:bg-muted p-2 rounded-md active:cursor-grabbing"
+                                                                className="cursor-grab border-border border hover:bg-muted p-2 active:cursor-grabbing"
                                                             >
                                                                 <GripVertical className="w-4 h-4 text-muted-foreground" />
                                                             </div>

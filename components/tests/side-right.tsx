@@ -17,7 +17,7 @@ import {
     SidebarContent,
     SidebarHeader,
 } from "@/components/ui/sidebar"
-import { Question } from "@/app/user/tests/new/page"
+import { Question } from "@/components/tests/test-builder-container"
 
 interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
     selectedQuestion?: Question
