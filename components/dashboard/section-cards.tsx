@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/card'
 import { TrendingDown, TrendingUp } from 'lucide-react'
 import { ChartAreaGradient } from './area-chart'
-import { useState } from 'react'
 import { Calendar } from '../ui/calendar'
 
 const cardData = [
@@ -93,9 +92,7 @@ const testScheduleData = [
 ]
 
 export function SectionCards() {
-    const [dates, setDates] = useState<Date[]>(
-        testScheduleData.map(test => new Date(test.time))
-    )
+    const dates = testScheduleData.map(test => new Date(test.time))
 
     return (
         <div className="grid grid-cols-1 gap-4 grid-rows-[auto,1fr] px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">

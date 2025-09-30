@@ -105,7 +105,7 @@ interface TestBuilderProps {
                                                             <div>
                                                                 <div className="flex items-center gap-2">
                                                                     <span className="font-medium">Question {index + 1}</span>
-                                                                    <Badge variant="secondary" className="text-xs">
+                                                                    <Badge variant="secondary" className="text-xs max-lg:hidden">
                                                                         {getQuestionTypeLabel(question.type)}
                                                                     </Badge>
                                                                     <Badge variant="outline" className="text-xs">

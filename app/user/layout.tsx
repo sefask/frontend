@@ -5,10 +5,6 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar"
 
-export const iframeHeight = "800px"
-
-export const description = "A sidebar with a header and a search form."
-
 export default function Page({ children }: { children: React.ReactNode }) {
   return (
     <div className="[--header-height:calc(--spacing(14))]">
@@ -17,7 +13,7 @@ export default function Page({ children }: { children: React.ReactNode }) {
         <div className="flex flex-1">
           <AppSidebar />
           <SidebarInset>
-              {children}
+            {children}
           </SidebarInset>
         </div>
       </SidebarProvider>

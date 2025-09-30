@@ -13,22 +13,9 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-import {
     Sidebar,
     SidebarContent,
-    SidebarFooter,
     SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-    SidebarRail,
-    SidebarSeparator,
 } from "@/components/ui/sidebar"
 import { Question } from "@/app/user/tests/new/page"
 
