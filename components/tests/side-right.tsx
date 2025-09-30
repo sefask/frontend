@@ -89,7 +89,7 @@ interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
             className="sticky top-0 hidden h-svh border-l lg:flex"
             {...props}
         >
-            <SidebarHeader className="border-sidebar-border p-4 border-b">
+            <SidebarHeader className="border-sidebar-border h-24 p-4 border-b">
                 <div>
                     <h2 className="font-semibold">
                         {selectedQuestion ? 'Edit Question' : 'Test Editor'}

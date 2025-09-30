@@ -86,7 +86,7 @@ const page = () => {
         <SidebarProvider>
             <SidebarInset>
                 <div className="flex flex-col h-full">
-                    <div className="border-b">
+                    <div className="border-b h-24">
                         <h1 className="px-4 pt-6 pb-2 text-2xl font-semibold lg:px-6">Test Builder</h1>
                         <p className="px-4 pb-4 text-sm text-muted-foreground lg:px-6">
                             Create and manage your test questions. Click on a question to edit it.

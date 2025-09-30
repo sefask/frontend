@@ -88,7 +88,7 @@ interface TestBuilderProps {
                                                 ref={provided.innerRef}
                                                 {...provided.draggableProps}
                                                 className={`cursor-pointer transition-all ${selectedQuestionId === question.id
-                                                    ? 'bg-primary/15'
+                                                    ? 'border-foreground/60'
                                                     : ''
                                                     } ${snapshot.isDragging ? 'shadow-lg rotate-2' : ''}`}
                                                 onClick={() => onSelectQuestion(question.id)}
