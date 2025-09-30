@@ -39,16 +39,16 @@ const data = {
     },
     {
       title: "Tests",
-      url: "#",
+      url: "/tests",
       icon: FileQuestionMark,
       items: [
         {
           title: "All tests",
-          url: "#",
+          url: "/tests",
         },
         {
           title: "Create new test",
-          url: "#",
+          url: "/tests/new",
         },
       ],
     },
