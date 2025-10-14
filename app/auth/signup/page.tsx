@@ -2,15 +2,17 @@ import { GalleryVerticalEnd } from "lucide-react"
 import { SignUpForm } from "@/components/forms/signup-form"
 import Link from "next/link"
 import Image from "next/image"
+import logoLight from '@/public/img/logo-dark.svg'
+
 
 export default function SignInPage() {
     return (
         <div className="grid min-h-svh lg:grid-cols-2">
-            <div className="flex flex-col gap-4 p-6 md:p-10">
+            <div className="flex flex-col gap-6 p-6 md:p-10">
                 <div className="flex justify-center gap-2 md:justify-start">
                     <Link href="/" className="flex items-center gap-2 font-medium">
                         <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center">
-                            <GalleryVerticalEnd className="size-4" />
+                            <Image src={logoLight} alt='Sefask Logo' className='p-1' />
                         </div>
                         Sefask
                     </Link>
