@@ -3,12 +3,6 @@ import { Plus, Trash2, GripVertical } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Question } from "@/components/tests/test-builder-container"
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd"
 
