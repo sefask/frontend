@@ -1,5 +1,5 @@
-import { GalleryVerticalEnd } from "lucide-react"
-
+import Image from "next/image"
+import logoLight from '@/public/img/logo-light.svg'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -19,8 +19,9 @@ export function SignInForm({
               href="/"
               className="flex flex-col items-center gap-2 font-medium"
             >
-              <div className="flex size-8 items-center justify-center rounded-md">
-                <GalleryVerticalEnd className="size-6" />
+              <div className="flex size-12 items-center justify-center rounded-md">
+                <Image src={logoLight} alt='Sefask Logo' className='p-1' />
+
               </div>
               <span className="sr-only">Sefask</span>
             </Link>

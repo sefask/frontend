@@ -1,9 +1,7 @@
-import { GalleryVerticalEnd } from "lucide-react"
 import { SignUpForm } from "@/components/forms/signup-form"
 import Link from "next/link"
 import Image from "next/image"
 import logoLight from '@/public/img/logo-dark.svg'
-
 
 export default function SignInPage() {
     return (
