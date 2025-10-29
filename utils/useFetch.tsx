@@ -24,7 +24,7 @@ const useFetch = () => {
                 ...options,
             };
 
-            const response = await fetch(url, defaultOptions);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${url}`, defaultOptions);
             const result = await response.json();
             if (!response.ok) {
                 setErrors(result.errors);
