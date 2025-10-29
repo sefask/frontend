@@ -37,7 +37,7 @@ const chartConfig = {
 
 export function ChartAreaGradient() {
   return (
-    <Card className="col-span-2 flex flex-col justify-between">
+    <Card className="xl:col-span-2 flex flex-col justify-between">
       <CardHeader>
         <CardTitle>Responses Chart</CardTitle>
         <CardDescription>

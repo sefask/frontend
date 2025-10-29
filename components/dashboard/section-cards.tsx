@@ -120,37 +120,39 @@ export function SectionCards() {
                     </CardFooter>
                 </Card>
             ))}
-            <ChartAreaGradient />
-            <Card className='col-span-2'>
-                <CardHeader>
-                    <CardTitle>Test schedule</CardTitle>
-                    <CardDescription className="mb-4">Your test schedule for the next month</CardDescription>
-                    <CardAction>
-                        <Badge variant="outline" className="mb-2">5 Upcoming Tests</Badge>
-                    </CardAction>
-                </CardHeader>
-                <CardContent className='grid grid-cols-2 max-md:grid-cols-1 gap-4'>
-                    <div>
-                        <div className='flex flex-col h-full justify-between mb-4'>
-                            {testScheduleData.map((test, index) => (
-                                <div key={index} className='bg-muted/50 p-3 border border-border'>
-                                    <h4 className='font-medium'>{test.title}</h4>
-                                    <p className='text-muted-foreground text-sm'>{test.displayTime}</p>
-                                </div>
-                            ))}
+            <div className='grid xl:grid-cols-4 grid-cols-1 gap-4 col-span-full w-full'>
+                <ChartAreaGradient />
+                <Card className='xl:col-span-2'>
+                    <CardHeader>
+                        <CardTitle>Test schedule</CardTitle>
+                        <CardDescription className="mb-4">Your test schedule for the next month</CardDescription>
+                        <CardAction>
+                            <Badge variant="outline" className="mb-2">5 Upcoming Tests</Badge>
+                        </CardAction>
+                    </CardHeader>
+                    <CardContent className='grid grid-cols-2 max-sm:grid-cols-1 max-md:grid-cols-1 gap-4'>
+                        <div>
+                            <div className='flex flex-col h-full justify-between mb-4'>
+                                {testScheduleData.map((test, index) => (
+                                    <div key={index} className='bg-muted/50 p-3 border border-border'>
+                                        <h4 className='font-medium'>{test.title}</h4>
+                                        <p className='text-muted-foreground text-sm'>{test.displayTime}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                    <Calendar
-                        mode="multiple"
-                        numberOfMonths={1}
-                        defaultMonth={dates[0]}
-                        required
-                        selected={dates}
-                        max={5}
-                        className="border shadow-sm w-full"
-                    />
-                </CardContent>
-            </Card>
+                        <Calendar
+                            mode="multiple"
+                            numberOfMonths={1}
+                            defaultMonth={dates[0]}
+                            required
+                            selected={dates}
+                            max={5}
+                            className="border shadow-sm w-full"
+                        />
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     )
 }
