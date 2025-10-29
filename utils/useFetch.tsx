@@ -1,4 +1,5 @@
 import React from 'react';
+import { OtpErrors } from './useOTP';
 
 interface SignUpErrors {
     firstName?: string;
@@ -7,9 +8,17 @@ interface SignUpErrors {
     password?: string;
 }
 
+interface User {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    isVerified: boolean;
+}
+
 const useFetch = () => {
-    const [data, setData] = React.useState(null);
-    const [errors, setErrors] = React.useState<SignUpErrors | null>(null);
+    const [data, setData] = React.useState<User | null>(null);
+    const [errors, setErrors] = React.useState<SignUpErrors & OtpErrors | null>(null);
     const [loading, setLoading] = React.useState<boolean>(false);
 
     const fetchData = async (url: string, options: RequestInit = {}) => {
