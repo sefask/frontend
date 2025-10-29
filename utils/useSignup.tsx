@@ -53,7 +53,7 @@ export const useSignUp = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const signUp = await fetchData(`${process.env.BACKEND_URL}/api/auth/signup`, { method: "POST", body: JSON.stringify(formData) });
+        const signUp = await fetchData(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/signup`, { method: "POST", body: JSON.stringify(formData) });
 
         if (signUp) {
             toast.success("Successfully signed up!");
