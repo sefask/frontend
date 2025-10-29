@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image"
 import logoLight from '@/public/img/logo-light.svg'
 import { cn } from '@/lib/utils'
@@ -5,14 +6,15 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import Link from "next/link"
+import { useSignIn } from "@/utils/useSignin"
+import { Spinner } from "../ui/spinner"
 
-export function SignInForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function SignInForm({ className, ...props }: React.ComponentProps<"div">) {
+  const { formData, setFormData, loading, errors, setErrors, handleSubmit } = useSignIn();
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
             <Link
@@ -35,16 +37,34 @@ export function SignInForm({
           </div>
           <div className="flex flex-col gap-6">
             <div className="grid gap-3">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="m@example.com" required />
+              <div className="flex justify-between">
+                <Label htmlFor="email">Email</Label>
+                <p className="text-amber-300 text-xs">{errors?.email}</p>
+              </div>
+              <Input
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                formNoValidate
+                onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setErrors({ ...errors, email: "" }) }}
+              />
             </div>
             <div className="grid gap-3">
-              <Label htmlFor="email">Password</Label>
-              <Input id="password" type="password" placeholder="•••••••••••" required />
+              <div className="flex justify-between">
+                <Label htmlFor="email">Password</Label>
+                <p className="text-amber-300 text-xs">{errors?.password}</p>
+              </div>
+              <Input
+                id="password"
+                type="password"
+                placeholder="•••••••••••"
+                formNoValidate
+                onChange={(e) => { setFormData({ ...formData, password: e.target.value }); setErrors({ ...errors, password: "" }) }}
+              />
             </div>
             <div className="flex flex-col items-start gap-3">
-              <Button size={"lg"} type="submit" className="w-full">
-                Sign in
+              <Button type="submit" size={"lg"} className="w-full cursor-pointer">
+                {loading ? <Spinner /> : <span>Sign in</span>}
               </Button>
             </div>
           </div>
