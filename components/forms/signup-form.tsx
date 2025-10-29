@@ -9,7 +9,7 @@ import { Spinner } from "../ui/spinner"
 
 export function SignUpForm({ className, ...props }: React.ComponentProps<"form">) {
   const { formData, setFormData, loading, errors, setErrors, handleSubmit } = useSignUp();
-
+  console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
   return (
     <form className={cn("flex flex-col gap-6", className)} {...props} onSubmit={handleSubmit}>
       <div className="flex flex-col items-start gap-2 text-start">
