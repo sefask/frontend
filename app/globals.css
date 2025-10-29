@@ -19,6 +19,10 @@
   font-family: var(--font-geist-sans);
 }
 
+* {
+  font-family: var(--font-geist-sans);
+}
+
 .geist-mono {
   font-family: var(--font-geist-mono);
 }

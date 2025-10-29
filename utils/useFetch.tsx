@@ -9,8 +9,8 @@ interface SignUpErrors {
 
 const useFetch = () => {
     const [data, setData] = React.useState(null);
-    const [errors, setErrors] = React.useState<SignUpErrors | null >(null);
-    const [loading, setLoading] = React.useState(false);
+    const [errors, setErrors] = React.useState<SignUpErrors | null>(null);
+    const [loading, setLoading] = React.useState<boolean>(false);
 
     const fetchData = async (url: string, options: RequestInit = {}) => {
         setLoading(true);
@@ -29,14 +29,16 @@ const useFetch = () => {
             if (!response.ok) {
                 setErrors(result.errors);
                 setData(null);
-                return;
+                return false;
             } else {
                 setData(result);
                 setErrors(null);
+                return true;
             }
         } catch (err: any) {
             setErrors(err.message);
             setData(null);
+            return false;
         } finally {
             setLoading(false);
         }

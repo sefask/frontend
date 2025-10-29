@@ -1,5 +1,7 @@
 import { useState } from "react";
 import useFetch from "./useFetch";
+import { toast } from "sonner";
+import { CircleCheck } from "lucide-react";
 
 // Form data interface
 interface SignUpFormData {
@@ -47,15 +49,14 @@ export const useSignUp = () => {
         email: "",
         password: "",
     });
-    const { data, errors, setErrors, loading, fetchData } = useFetch();
-    // const [errors, setErrors] = useState<SignUpErrors>({});
+    const { errors, setErrors, loading, fetchData } = useFetch();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        fetchData("/api/auth/signup", { method: "POST", body: JSON.stringify(formData) });
+        const signUp = await fetchData("/api/auth/signup", { method: "POST", body: JSON.stringify(formData) });
 
-        if (!errors) {
-            console.log("Signup successful", data);
+        if (signUp) {
+            toast.success("Successfully signed up!");
         }
     }
 
