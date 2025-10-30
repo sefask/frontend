@@ -38,16 +38,16 @@ const useFetch = () => {
             if (!response.ok) {
                 setErrors(result.errors);
                 setData(null);
-                return false;
+                return null;
             } else {
                 setData(result);
                 setErrors(null);
-                return true;
+                return result;
             }
         } catch (err: any) {
             setErrors(err.message);
             setData(null);
-            return false;
+            return null;
         } finally {
             setLoading(false);
         }

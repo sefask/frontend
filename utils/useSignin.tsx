@@ -30,7 +30,7 @@ export const useSignIn = () => {
 
         if (signIn) {
             toast.success("Successfully signed in!");
-            if(!data?.user.isVerified) {
+            if(!signIn?.user.isVerified) {
                 navigator.push("/auth/verify-otp");
             } else {
                 navigator.push("/user/dashboard");

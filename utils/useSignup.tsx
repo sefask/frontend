@@ -58,7 +58,7 @@ export const useSignUp = () => {
 
         if (signUp) {
             toast.success("Successfully signed up!");
-            if (!data?.user.isVerified) {
+            if (!signUp?.user.isVerified) {
                 navigator.push("/auth/verify-otp");
             } else {
                 navigator.push("/user/dashboard");
