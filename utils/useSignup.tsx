@@ -50,15 +50,19 @@ export const useSignUp = () => {
         password: "",
     });
     const navigator = useRouter()
-    const { errors, setErrors, loading, fetchData } = useFetch();
+    const { errors, setErrors, loading, data, fetchData } = useFetch();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const signUp = await fetchData("/api/auth/signup", { method: "POST", body: JSON.stringify(formData) });
-        
+
         if (signUp) {
             toast.success("Successfully signed up!");
-            navigator.push("/auth/signin");
+            if (!data?.user.isVerified) {
+                navigator.push("/auth/verify-otp");
+            } else {
+                navigator.push("/user/dashboard");
+            }
         }
     }
 
