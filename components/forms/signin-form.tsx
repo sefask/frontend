@@ -63,7 +63,7 @@ export function SignInForm({ className, ...props }: React.ComponentProps<"div">)
               />
             </div>
             <div className="flex flex-col items-start gap-3">
-              <Button type="submit" size={"lg"} className="w-full cursor-pointer">
+              <Button disabled={loading} type="submit" size={"lg"} className="w-full cursor-pointer">
                 {loading ? <Spinner /> : <span>Sign in</span>}
               </Button>
             </div>
