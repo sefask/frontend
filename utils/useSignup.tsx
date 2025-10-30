@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useFetch from "./useFetch";
 import { toast } from "sonner";
-import { CircleCheck } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 // Form data interface
 interface SignUpFormData {
@@ -49,7 +49,8 @@ export const useSignUp = () => {
         email: "",
         password: "",
     });
-    const { errors, setErrors, loading, fetchData } = useFetch();
+    const navigator = useRouter()
+    const { errors, setErrors, loading, data, fetchData } = useFetch();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -57,6 +58,11 @@ export const useSignUp = () => {
 
         if (signUp) {
             toast.success("Successfully signed up!");
+            if (!signUp?.user.isVerified) {
+                navigator.push("/auth/verify-otp");
+            } else {
+                navigator.push("/user/dashboard");
+            }
         }
     }
 

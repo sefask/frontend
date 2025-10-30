@@ -1,5 +1,5 @@
 "use client"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -8,6 +8,10 @@ import { Label } from '@/components/ui/label'
 import email from "@/public/img/email.png"
 import Link from "next/link"
 import Image from "next/image"
+import useFetch from "@/utils/useFetch"
+import { useOTP } from "@/utils/useOTP"
+import { Spinner } from "../ui/spinner"
+import { toast } from "sonner"
 
 export function OTPForm({
   className,
@@ -73,17 +77,25 @@ export function OTPForm({
     inputRefs.current[targetIndex]?.focus()
   }
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const otpString = otp.join("")
+  const { loading: emailLoading, data, fetchData } = useFetch();
 
-    if (otpString.length === 6) {
-      // Add your OTP verification logic here
-      // TODO: Replace with actual API call
-    } else {
-      // Handle incomplete OTP
-      // TODO: Show user feedback for incomplete OTP
+  useEffect(() => {
+    const fetchUser = async () => {
+      fetchData('/api/auth/me')
+    }
+
+    fetchUser();
+  }, [fetchData])
+
+  // Handle form submission
+  const otpString = otp.join("")
+  const { errors, loading, handleSubmit } = useOTP(data?.email, otpString);
+
+  const resendOtp = async () => {
+    const resend = await fetchData("/api/auth/resend-verification", { method: "POST", body: JSON.stringify({ email: data?.email }) });
+
+    if (resend) {
+      toast.success("OTP resent successfully!");
     }
   }
   return (
@@ -103,12 +115,13 @@ export function OTPForm({
             <h1 className="text-xl font-bold">Please verify your email</h1>
             <div className="text-center text-sm">
               Please enter the OTP sent to
-              <p className="font-bold underline underline-offset-4">example@email.com</p>
+              <p className="font-bold underline underline-offset-4">{data?.email}</p>
             </div>
           </div>
           <div className="flex flex-col gap-6">
             <div className="grid gap-3">
               <Label htmlFor="otp" className="sr-only">OTP</Label>
+              <p className="text-amber-300 text-xs">{errors?.code}</p>
               <div className="grid grid-cols-6 gap-3">
                 {Array.from({ length: 6 }).map((_, index) => (
                   <Input
@@ -125,14 +138,17 @@ export function OTPForm({
                     onKeyDown={(e) => handleKeyDown(e, index)}
                     onPaste={handlePaste}
                     className="text-center"
-                    required
+                    formNoValidate
                   />
                 ))}
               </div>
             </div>
             <div className="flex flex-col items-start gap-3">
-              <Button size={"lg"} type="submit" className="w-full">
-                Verify OTP
+              <Button type="submit" size={"lg"} className="w-full cursor-pointer">
+                {loading ? <Spinner /> : <span>Verify OTP</span>}
+              </Button>
+              <Button type="button" variant={"link"} className="p-0" onClick={resendOtp}>
+                {emailLoading ? <div className="flex gap-2 items-center"><Spinner /> <span className="text-white/70">Resending OTP...</span></div> : <span>Resend OTP</span>}
               </Button>
             </div>
           </div>
