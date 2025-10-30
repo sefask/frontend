@@ -17,7 +17,7 @@ interface User {
 }
 
 const useFetch = () => {
-    const [data, setData] = React.useState<User | null>(null);
+    const [data, setData] = React.useState<any>(null);
     const [errors, setErrors] = React.useState<SignUpErrors & OtpErrors | null>(null);
     const [loading, setLoading] = React.useState<boolean>(false);
 

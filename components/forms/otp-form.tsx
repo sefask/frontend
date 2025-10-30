@@ -90,7 +90,7 @@ export function OTPForm({
   // Handle form submission
   const otpString = otp.join("")
   const { errors, setErrors, loading, handleSubmit } = useOTP(data?.email, otpString);
-  
+
   const resendOtp = async () => {
     const resend = await fetchData("/api/auth/resend-verification", { method: "POST", body: JSON.stringify({ email: data?.email }) });
 
@@ -148,7 +148,7 @@ export function OTPForm({
                 {loading ? <Spinner /> : <span>Verify OTP</span>}
               </Button>
               <Button type="button" variant={"link"} className="p-0" onClick={resendOtp}>
-                Resend OTP
+                {emailLoading ? <div className="flex gap-2 items-center"><Spinner /> <span className="text-white/70">Resending OTP...</span></div> : <span>Resend OTP</span>}
               </Button>
             </div>
           </div>

@@ -22,7 +22,7 @@ export const useSignIn = () => {
     });
 
     const navigator = useRouter()
-    const { errors, setErrors, loading, fetchData } = useFetch();
+    const { errors, data, setErrors, loading, fetchData } = useFetch();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -30,7 +30,11 @@ export const useSignIn = () => {
 
         if (signIn) {
             toast.success("Successfully signed in!");
-            navigator.push("/user/dashboard");
+            if(!data?.user.isVerified) {
+                navigator.push("/auth/verify-otp");
+            } else {
+                navigator.push("/user/dashboard");
+            }
         }
     }
 
