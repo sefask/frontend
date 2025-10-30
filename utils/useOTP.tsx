@@ -1,5 +1,4 @@
 "use client"
-import { useState } from "react";
 import useFetch from "./useFetch";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -7,11 +6,6 @@ import { useRouter } from "next/navigation";
 export interface OtpErrors {
     code?: string;
 }
-
-interface OtpFormData {
-    code: string;
-}
-
 
 export const useOTP = (email?: string, code?: string) => {
 

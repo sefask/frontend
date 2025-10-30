@@ -77,7 +77,7 @@ export function OTPForm({
     inputRefs.current[targetIndex]?.focus()
   }
 
-  const { errors: emailErrors, loading: emailLoading, data, fetchData } = useFetch();
+  const { loading: emailLoading, data, fetchData } = useFetch();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -85,11 +85,11 @@ export function OTPForm({
     }
 
     fetchUser();
-  }, [])
+  }, [fetchData])
 
   // Handle form submission
   const otpString = otp.join("")
-  const { errors, setErrors, loading, handleSubmit } = useOTP(data?.email, otpString);
+  const { errors, loading, handleSubmit } = useOTP(data?.email, otpString);
 
   const resendOtp = async () => {
     const resend = await fetchData("/api/auth/resend-verification", { method: "POST", body: JSON.stringify({ email: data?.email }) });

@@ -4,11 +4,6 @@ import useFetch from "./useFetch";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-interface SignInErrors {
-    email?: string;
-    password?: string;
-}
-
 interface SignInFormData {
     email: string;
     password: string;

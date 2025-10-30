@@ -4,7 +4,7 @@ import useFetch from "./useFetch";
 
 export const useSignout = () => {
     const navigator = useRouter()
-    const { errors, data, setErrors, loading, fetchData } = useFetch();
+    const { errors, setErrors, loading, fetchData } = useFetch();
 
     const handleSignout = async (e: React.FormEvent) => {
         e.preventDefault();

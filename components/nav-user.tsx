@@ -9,7 +9,6 @@ import {
   Sparkles,
 } from "lucide-react"
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 
 import {
   Avatar,
@@ -48,18 +47,16 @@ import { Spinner } from "./ui/spinner"
 
 export function NavUser({ user, }: { user: { name: string, email: string, avatar: string } }) {
   const { isMobile } = useSidebar()
-  const router = useRouter()
-  const { errors, loading, data, fetchData } = useFetch();
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false)
-  const [isLoggingOut, setIsLoggingOut] = useState(false)
 
+  const { data, fetchData } = useFetch();
   useEffect(() => {
     const fetchUser = async () => {
       fetchData('/api/auth/me')
     }
 
     fetchUser();
-  }, [])
+  }, [fetchData])
 
   const { handleSignout, loading: loggingOut } = useSignout();
 
@@ -140,7 +137,7 @@ export function NavUser({ user, }: { user: { name: string, email: string, avatar
           <AlertDialogHeader>
             <AlertDialogTitle>Sign out?</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to sign out? You'll need to sign in again to access your account.
+              Are you sure you want to sign out? You&apos;ll need to sign in again to access your account.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
