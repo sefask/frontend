@@ -56,7 +56,7 @@ export function NavUser({ user, }: { user: { name: string, email: string, avatar
     }
 
     fetchUser();
-  }, [fetchData])
+  }, [])
 
   const { handleSignout, loading: loggingOut } = useSignout();
 
@@ -71,7 +71,6 @@ export function NavUser({ user, }: { user: { name: string, email: string, avatar
                 className="data-[state=open]:bg-sidebar-accent cursor-pointer data-[state=open]:text-sidebar-accent-foreground"
               >
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback className="text-background font-medium">{data?.firstName[0]}{data?.lastName[0]}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -147,7 +146,14 @@ export function NavUser({ user, }: { user: { name: string, email: string, avatar
               disabled={loggingOut}
               className="bg-primary text-background hover:bg-primary/90"
             >
-              {loggingOut ? <div className="flex gap-2 items-center"><Spinner /> <span className="text-white/70">Signing out...</span></div> : <span>Sign out</span>}
+              {loggingOut ?
+                <div className="flex gap-2 items-center text-black">
+                  <Spinner />
+                  <span className="text-black">Signing out...</span>
+                </div>
+                :
+                <span>Sign out</span>
+              }
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

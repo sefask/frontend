@@ -12,6 +12,7 @@ import useFetch from "@/utils/useFetch"
 import { useOTP } from "@/utils/useOTP"
 import { Spinner } from "../ui/spinner"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 export function OTPForm({
   className,
@@ -19,6 +20,7 @@ export function OTPForm({
 }: React.ComponentProps<"div">) {
   const [otp, setOTP] = useState<string[]>(new Array(6).fill(""))
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
+  const router = useRouter();
 
   // Handle input change
   const handleChange = (element: HTMLInputElement, index: number) => {
@@ -77,23 +79,30 @@ export function OTPForm({
     inputRefs.current[targetIndex]?.focus()
   }
 
-  const { loading: emailLoading, data, fetchData } = useFetch();
-
+  const { loading: emailLoading, data, fetchData: fetchUserInfo } = useFetch();
+  
   useEffect(() => {
     const fetchUser = async () => {
-      fetchData('/api/auth/me')
+      const user = await fetchUserInfo('/api/auth/me')
+      
+      if(user.isVerified) {
+        toast.info("Your email is already verified.")
+        router.push("/user/dashboard");
+      }
     }
 
     fetchUser();
-  }, [fetchData])
-
+  }, [])
+  
   // Handle form submission
   const otpString = otp.join("")
   const { errors, loading, handleSubmit } = useOTP(data?.email, otpString);
-
+  
+  const { loading: otpLoading, fetchData } = useFetch();
   const resendOtp = async () => {
-    const resend = await fetchData("/api/auth/resend-verification", { method: "POST", body: JSON.stringify({ email: data?.email }) });
 
+    const resend = await fetchData("/api/auth/resend-verification", { method: "POST", body: JSON.stringify({ email: data?.email }) });
+    
     if (resend) {
       toast.success("OTP resent successfully!");
     }
@@ -144,11 +153,11 @@ export function OTPForm({
               </div>
             </div>
             <div className="flex flex-col items-start gap-3">
-              <Button type="submit" size={"lg"} className="w-full cursor-pointer">
+              <Button disabled={loading} type="submit" size={"lg"} className="w-full cursor-pointer">
                 {loading ? <Spinner /> : <span>Verify OTP</span>}
               </Button>
-              <Button type="button" variant={"link"} className="p-0" onClick={resendOtp}>
-                {emailLoading ? <div className="flex gap-2 items-center"><Spinner /> <span className="text-white/70">Resending OTP...</span></div> : <span>Resend OTP</span>}
+              <Button disabled={otpLoading} type="button" variant={"link"} className="p-0" onClick={resendOtp}>
+                {otpLoading ? <div className="flex gap-2 items-center"><Spinner /> <span className="text-white/70">Resending OTP...</span></div> : <span>Resend OTP</span>}
               </Button>
             </div>
           </div>

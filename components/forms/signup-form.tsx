@@ -63,7 +63,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<"form">
             className={`${errors?.password ? "border-amber-400/35" : ""}`}
           />
         </div>
-        <Button type="submit" size={"lg"} className="w-full cursor-pointer">
+        <Button disabled={loading} type="submit" size={"lg"} className="w-full cursor-pointer">
           {loading ? <Spinner /> : <span>Sign up</span>}
         </Button>
         <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
