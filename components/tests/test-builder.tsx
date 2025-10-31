@@ -57,7 +57,7 @@ interface TestBuilderProps {
             {/* Questions List */}
             {questions.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
-                    <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
+                    <div className="w-16 h-16 bg-muted rounded-none flex items-center justify-center mb-4">
                         <Plus className="w-8 h-8 text-muted-foreground" />
                     </div>
                     <h3 className="text-lg font-medium mb-2">No questions yet</h3>

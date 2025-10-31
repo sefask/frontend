@@ -92,7 +92,7 @@ interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
             <SidebarContent className="p-4">
                 {!selectedQuestion ? (
                     <div className="flex flex-col items-center justify-center py-8 text-center">
-                        <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center mb-4">
+                        <div className="w-12 h-12 bg-muted rounded-none flex items-center justify-center mb-4">
                             <Plus className="w-6 h-6 text-muted-foreground" />
                         </div>
                         <h3 className="font-medium mb-2">No question selected</h3>
