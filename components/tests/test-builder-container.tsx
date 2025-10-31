@@ -103,6 +103,7 @@ const TestBuilderContainer = () => {
                 </div>
             </SidebarInset>
             <SidebarRight
+                className='min-w-96'
                 selectedQuestion={selectedQuestion}
                 onUpdateQuestion={updateQuestion}
                 onChangeQuestionType={changeQuestionType}

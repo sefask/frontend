@@ -150,17 +150,17 @@ interface SidebarRightProps extends React.ComponentProps<typeof Sidebar> {
                                     <Label>Answer Options</Label>
                                     <div className="space-y-2">
                                         {selectedQuestion.options?.map((option, index) => (
-                                            <div key={index} className="flex items-center gap-2">
+                                            <div key={index} className="flex items-start gap-2">
                                                 <RadioGroup
                                                     value={selectedQuestion.correctAnswer?.toString()}
                                                     onValueChange={(value: string) => updateQuestion({ correctAnswer: parseInt(value) })}
                                                 >
                                                     <RadioGroupItem value={index.toString()} />
                                                 </RadioGroup>
-                                                <Input
+                                                <Textarea
                                                     placeholder={`Option ${index + 1}`}
                                                     value={option}
-                                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateOption(index, e.target.value)}
+                                                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => updateOption(index, e.target.value)}
                                                 />
                                                 {selectedQuestion.options && selectedQuestion.options.length > 2 && (
                                                     <Button

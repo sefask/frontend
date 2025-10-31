@@ -123,7 +123,7 @@ interface TestBuilderProps {
                                                 </CardHeader>
                                                 <CardContent className="pt-0">
                                                     <div className="space-y-2">
-                                                        <p className="text-sm font-medium">
+                                                        <p className="text-sm break-all font-medium">
                                                             {question.text || (
                                                                 <span className="text-muted-foreground italic">
                                                                     Click to add question text...
@@ -135,12 +135,12 @@ interface TestBuilderProps {
                                                                 {question.options.map((option, optionIndex) => (
                                                                     <div key={optionIndex} className="flex items-center gap-2 text-xs">
                                                                         <div
-                                                                            className={`w-2 h-2 rounded-full ${question.correctAnswer === optionIndex
+                                                                            className={`w-2 h-2 rounded-none ${question.correctAnswer === optionIndex
                                                                                 ? 'bg-green-500'
                                                                                 : 'bg-muted'
                                                                                 }`}
                                                                         />
-                                                                        <span className={option ? '' : 'text-muted-foreground italic'}>
+                                                                        <span className={`${option ? '' : 'text-muted-foreground italic'} break-all`}>
                                                                             {option || 'Empty option'}
                                                                         </span>
                                                                     </div>
