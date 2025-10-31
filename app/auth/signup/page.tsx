@@ -2,8 +2,17 @@ import { SignUpForm } from "@/components/forms/signup-form"
 import Link from "next/link"
 import Image from "next/image"
 import logoLight from '@/public/img/logo-dark.svg'
+import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 
-export default function SignInPage() {
+export default async function SignInPage() {
+    const cookieStore = await cookies()
+    const token = cookieStore.get('authToken')
+
+    if (token) {
+        redirect('/user/dashboard');
+    }
+
     return (
         <div className="grid min-h-svh lg:grid-cols-2">
             <div className="flex flex-col gap-6 p-6 md:p-10">
