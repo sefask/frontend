@@ -123,7 +123,7 @@ interface TestBuilderProps {
                                                 </CardHeader>
                                                 <CardContent className="pt-0">
                                                     <div className="space-y-2">
-                                                        <p className="text-sm font-medium">
+                                                        <p className="text-sm break-all font-medium">
                                                             {question.text || (
                                                                 <span className="text-muted-foreground italic">
                                                                     Click to add question text...
@@ -140,7 +140,7 @@ interface TestBuilderProps {
                                                                                 : 'bg-muted'
                                                                                 }`}
                                                                         />
-                                                                        <span className={option ? '' : 'text-muted-foreground italic'}>
+                                                                        <span className={`${option ? '' : 'text-muted-foreground italic'} break-all`}>
                                                                             {option || 'Empty option'}
                                                                         </span>
                                                                     </div>
@@ -151,7 +151,7 @@ interface TestBuilderProps {
                                                             <div className="flex items-center gap-4 text-xs">
                                                                 <div className="flex items-center gap-1">
                                                                     <div
-                                                                        className={`w-2 h-2 rounded-none ${question.correctAnswer === 'true' ? 'bg-green-500' : 'bg-muted'
+                                                                        className={`w-2 h-2 rounded-full ${question.correctAnswer === 'true' ? 'bg-green-500' : 'bg-muted'
                                                                             }`}
                                                                     />
                                                                     <span>True</span>
