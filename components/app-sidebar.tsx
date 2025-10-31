@@ -37,7 +37,7 @@ const data = {
       isActive: true,
     },
     {
-      title: "Tests",
+      title: "Assignments",
       url: "/user/assignments",
       icon: FileQuestionMark,
       items: [
