@@ -135,7 +135,7 @@ interface TestBuilderProps {
                                                                 {question.options.map((option, optionIndex) => (
                                                                     <div key={optionIndex} className="flex items-center gap-2 text-xs">
                                                                         <div
-                                                                            className={`w-2 h-2 rounded-full ${question.correctAnswer === optionIndex
+                                                                            className={`w-2 h-2 rounded-none ${question.correctAnswer === optionIndex
                                                                                 ? 'bg-green-500'
                                                                                 : 'bg-muted'
                                                                                 }`}
@@ -151,7 +151,7 @@ interface TestBuilderProps {
                                                             <div className="flex items-center gap-4 text-xs">
                                                                 <div className="flex items-center gap-1">
                                                                     <div
-                                                                        className={`w-2 h-2 rounded-full ${question.correctAnswer === 'true' ? 'bg-green-500' : 'bg-muted'
+                                                                        className={`w-2 h-2 rounded-none ${question.correctAnswer === 'true' ? 'bg-green-500' : 'bg-muted'
                                                                             }`}
                                                                     />
                                                                     <span>True</span>
