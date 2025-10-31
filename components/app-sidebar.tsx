@@ -38,16 +38,16 @@ const data = {
     },
     {
       title: "Tests",
-      url: "/user/tests",
+      url: "/user/assignments",
       icon: FileQuestionMark,
       items: [
         {
-          title: "All tests",
-          url: "/user/tests",
+          title: "All assignments",
+          url: "/user/assignments",
         },
         {
-          title: "Create new test",
-          url: "/user/tests/new",
+          title: "Create new assignment",
+          url: "/user/assignments/new",
         },
       ],
     },
