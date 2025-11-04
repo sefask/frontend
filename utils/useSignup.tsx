@@ -61,7 +61,7 @@ export const useSignUp = () => {
             if (!signUp?.user.isVerified) {
                 navigator.push("/auth/verify-otp");
             } else {
-                navigator.push("/user/dashboard");
+                navigator.push("/dashboard");
             }
         }
     }

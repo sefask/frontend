@@ -28,7 +28,7 @@ export const useSignIn = () => {
             if(!signIn?.user.isVerified) {
                 navigator.push("/auth/verify-otp");
             } else {
-                navigator.push("/user/dashboard");
+                navigator.push("/dashboard");
             }
         }
     }

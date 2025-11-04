@@ -32,22 +32,22 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "/user/dashboard",
+      url: "/dashboard",
       icon: Compass,
       isActive: true,
     },
     {
       title: "Assignments",
-      url: "/user/assignments",
+      url: "/assignments",
       icon: FileQuestionMark,
       items: [
         {
           title: "All assignments",
-          url: "/user/assignments",
+          url: "/assignments",
         },
         {
           title: "Create new assignment",
-          url: "/user/assignments/new",
+          url: "/assignments/new",
         },
       ],
     },

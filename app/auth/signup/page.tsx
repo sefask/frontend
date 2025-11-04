@@ -10,7 +10,7 @@ export default async function SignInPage() {
     const token = cookieStore.get('authToken')
 
     if (token) {
-        redirect('/user/dashboard');
+        redirect('/dashboard');
     }
 
     return (
