@@ -91,7 +91,7 @@ export function SidebarRight({
                 </div>
             </SidebarHeader>
 
-            <SidebarContent className="p-4">
+            <SidebarContent className="p-4 scrolly">
                 {!selectedQuestion ? (
                     <div className="flex flex-col items-center justify-center py-8 text-center">
                         <div className="w-12 h-12 bg-muted rounded-none flex items-center justify-center mb-4">
@@ -152,28 +152,34 @@ export function SidebarRight({
                                     <Label>Answer Options</Label>
                                     <div className="space-y-2">
                                         {selectedQuestion.options?.map((option, index) => (
-                                            <div key={index} className="flex items-start gap-2">
-                                                <RadioGroup
-                                                    value={selectedQuestion.correctAnswer?.toString()}
-                                                    onValueChange={(value: string) => updateQuestion({ correctAnswer: parseInt(value) })}
-                                                >
-                                                    <RadioGroupItem value={index.toString()} />
-                                                </RadioGroup>
+                                            <div key={index} className="flex flex-col items-start gap-2">
+                                                <div className="flex justify-between w-full">
+                                                    <div className="flex items-center gap-2">
+
+                                                        <RadioGroup
+                                                            value={selectedQuestion.correctAnswer?.toString()}
+                                                            onValueChange={(value: string) => updateQuestion({ correctAnswer: parseInt(value) })}
+                                                        >
+                                                            <RadioGroupItem value={index.toString()} />
+                                                        </RadioGroup>
+                                                        <span className="text-sm">Correct answer ?</span>
+                                                    </div>
+                                                    {selectedQuestion.options && selectedQuestion.options.length > 2 && (
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="icon"
+                                                            onClick={() => removeOption(index)}
+                                                            className="hover:text-destructive text-destructive hover:bg-destructive/20"
+                                                        >
+                                                            <Trash2 className="w-4 h-4" />
+                                                        </Button>
+                                                    )}
+                                                </div>
                                                 <Textarea
                                                     placeholder={`Option ${index + 1}`}
                                                     value={option}
                                                     onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => updateOption(index, e.target.value)}
                                                 />
-                                                {selectedQuestion.options && selectedQuestion.options.length > 2 && (
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        onClick={() => removeOption(index)}
-                                                        className="text-destructive hover:text-destructive"
-                                                    >
-                                                        <Trash2 className="w-4 h-4" />
-                                                    </Button>
-                                                )}
                                             </div>
                                         ))}
                                     </div>
