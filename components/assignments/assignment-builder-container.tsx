@@ -19,6 +19,7 @@ const AssignmentBuilderContainer = () => {
     const [questions, setQuestions] = useState<Question[]>([])
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null)
     const [isSaving, setIsSaving] = useState(false)
+    const [assignmentTitle, setAssignmentTitle] = useState('Create Assignment')
 
     const addQuestion = (afterIndex?: number) => {
         const newQuestion: Question = {
@@ -138,6 +139,8 @@ const AssignmentBuilderContainer = () => {
                 totalPoints={totalPoints}
                 onSave={handleSaveAssignment}
                 isSaving={isSaving}
+                title={assignmentTitle}
+                onTitleChange={setAssignmentTitle}
             />
             <SidebarProvider>
                 <SidebarInset className='h-[613px] overflow-y-auto scrolly'>

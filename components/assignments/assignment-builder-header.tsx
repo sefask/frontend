@@ -1,7 +1,6 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import { ChevronLeft, Save } from 'lucide-react'
 import Link from 'next/link'
 
@@ -10,14 +9,20 @@ interface AssignmentBuilderHeaderProps {
     totalPoints: number
     onSave?: () => void
     isSaving?: boolean
+    title?: string
+    onTitleChange?: (title: string) => void
 }
 
 export function AssignmentBuilderHeader({
     questionCount,
     totalPoints,
     onSave,
-    isSaving = false
+    isSaving = false,
+    title = 'Create Assignment',
+    onTitleChange
 }: AssignmentBuilderHeaderProps) {
+    const [isEditing, setIsEditing] = useState(false)
+    const [editValue, setEditValue] = useState(title)
     return (
         <header className="w-full border-b bg-background">
             <div className="flex items-center justify-between p-4">
@@ -33,7 +38,45 @@ export function AssignmentBuilderHeader({
                         </Link>
                     </Button>
                     <div className="flex gap-3 items-center">
-                        <h1 className="text-lg font-semibold">Create Assignment</h1>
+                        {isEditing ? (
+                            <input
+                                autoFocus
+                                value={editValue}
+                                onChange={(e) => setEditValue(e.target.value)}
+                                onBlur={() => {
+                                    setIsEditing(false)
+                                    if (editValue.trim()) {
+                                        onTitleChange?.(editValue.trim())
+                                    } else {
+                                        setEditValue(title)
+                                    }
+                                }}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        setIsEditing(false)
+                                        if (editValue.trim()) {
+                                            onTitleChange?.(editValue.trim())
+                                        } else {
+                                            setEditValue(title)
+                                        }
+                                    } else if (e.key === 'Escape') {
+                                        setIsEditing(false)
+                                        setEditValue(title)
+                                    }
+                                }}
+                                className="font-base border-0 bg-border/60 text-lg px-1 outline-0 ring-0"
+                            />
+                        ) : (
+                            <h1
+                                className="text-lg font-semibold cursor-text hover:bg-muted/60 px-1 transition-colors"
+                                onClick={() => {
+                                    setIsEditing(true)
+                                    setEditValue(title)
+                                }}
+                            >
+                                {title}
+                            </h1>
+                        )}
                         <p className="text-xs bg-foreground/15 p-1 px-2 text-muted-foreground">
                             {questionCount} question{questionCount !== 1 ? 's' : ''} • {totalPoints} point{totalPoints !== 1 ? 's' : ''}
                         </p>
