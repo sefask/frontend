@@ -42,7 +42,7 @@ const data = {
       icon: FileQuestionMark,
       items: [
         {
-          title: "All assignments",
+          title: "My assignments",
           url: "/assignments",
         },
         {
@@ -55,6 +55,16 @@ const data = {
       title: "Responses",
       url: "#",
       icon: FileCheck,
+      items: [
+        {
+          title: "All responses",
+          url: "/",
+        },
+        {
+          title: "Sent responses",
+          url: "/",
+        },
+      ],
     },
     {
       title: "Notifications",
