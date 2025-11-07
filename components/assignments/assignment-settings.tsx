@@ -87,7 +87,7 @@ export function AssignmentSettings({ title = 'Untitled' }: AssignmentSettingsPro
                     <CardDescription>Choose how your assignment will be delivered</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <RadioGroup value={assignmentType} onValueChange={(value: any) => setAssignmentType(value)}>
+                    <RadioGroup value={assignmentType} onValueChange={(value: 'simple' | 'live') => setAssignmentType(value)}>
                         <div className="grid grid-cols-2 gap-3">
                             {/* Simple Assignment Card */}
                             <div

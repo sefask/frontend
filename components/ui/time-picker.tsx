@@ -4,7 +4,6 @@ import * as React from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Clock } from "lucide-react"
-import { cn } from "@/lib/utils"
 
 interface TimePickerProps {
     value: string
@@ -21,13 +20,11 @@ export function TimePicker({ value, onChange }: TimePickerProps) {
         const parts = value.split(":")
         return parts[1] || "00"
     })
-    const [inputValue, setInputValue] = React.useState(value)
     const pickerRef = React.useRef<HTMLDivElement>(null)
 
     React.useEffect(() => {
         setHours(value.split(":")[0] || "00")
         setMinutes(value.split(":")[1] || "00")
-        setInputValue(value)
     }, [value])
 
     // Close picker when clicking outside
@@ -45,33 +42,19 @@ export function TimePicker({ value, onChange }: TimePickerProps) {
     }, [isOpen])
 
     const handleHourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let val = e.target.value.replace(/\D/g, "")
-        if (val.length > 2) val = val.slice(0, 2)
-        const hour = Math.min(parseInt(val || "0"), 23)
+        const val = e.target.value.replace(/\D/g, "")
+        const limitedVal = val.length > 2 ? val.slice(0, 2) : val
+        const hour = Math.min(parseInt(limitedVal || "0"), 23)
         const newHours = String(hour).padStart(2, "0")
         setHours(newHours)
     }
 
     const handleMinuteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let val = e.target.value.replace(/\D/g, "")
-        if (val.length > 2) val = val.slice(0, 2)
-        const minute = Math.min(parseInt(val || "0"), 59)
+        const val = e.target.value.replace(/\D/g, "")
+        const limitedVal = val.length > 2 ? val.slice(0, 2) : val
+        const minute = Math.min(parseInt(limitedVal || "0"), 59)
         const newMinutes = String(minute).padStart(2, "0")
         setMinutes(newMinutes)
-    }
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let val = e.target.value.replace(/\D/g, "")
-        setInputValue(val)
-
-        if (val.length === 4) {
-            const h = val.slice(0, 2)
-            const m = val.slice(2, 4)
-            const hour = Math.min(parseInt(h), 23)
-            const minute = Math.min(parseInt(m), 59)
-            setHours(String(hour).padStart(2, "0"))
-            setMinutes(String(minute).padStart(2, "0"))
-        }
     }
 
     const handleConfirm = () => {
