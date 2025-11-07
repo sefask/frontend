@@ -1,9 +1,13 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Calendar } from '@/components/ui/calendar'
+import { Button } from '@/components/ui/button'
+import { TimePicker } from '@/components/ui/time-picker'
+import { CalendarIcon } from 'lucide-react'
+import { format } from 'date-fns'
 
 interface AssignmentSettingsProps {
     title?: string
@@ -14,10 +18,32 @@ export function AssignmentSettings({ title = 'Untitled' }: AssignmentSettingsPro
     const [isProctored, setIsProctored] = useState(false)
     const [requireCamera, setRequireCamera] = useState(false)
     const [preventTabSwitch, setPreventTabSwitch] = useState(false)
+    const [startDate, setStartDate] = useState<Date | undefined>()
     const [startTime, setStartTime] = useState('')
+    const [endDate, setEndDate] = useState<Date | undefined>()
     const [endTime, setEndTime] = useState('')
     const [shuffleQuestions, setShuffleQuestions] = useState(false)
     const [showResults, setShowResults] = useState(true)
+    const [showStartCalendar, setShowStartCalendar] = useState(false)
+    const [showEndCalendar, setShowEndCalendar] = useState(false)
+
+    const startCalendarRef = useRef<HTMLDivElement>(null)
+    const endCalendarRef = useRef<HTMLDivElement>(null)
+
+    // Close calendars when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (startCalendarRef.current && !startCalendarRef.current.contains(event.target as Node)) {
+                setShowStartCalendar(false)
+            }
+            if (endCalendarRef.current && !endCalendarRef.current.contains(event.target as Node)) {
+                setShowEndCalendar(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [])
 
     const CheckboxField = ({
         id,
@@ -109,23 +135,64 @@ export function AssignmentSettings({ title = 'Untitled' }: AssignmentSettingsPro
                         <CardDescription>Set when the assignment is available</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="start-time">Start Time</Label>
-                            <Input
-                                id="start-time"
-                                type="datetime-local"
-                                value={startTime}
-                                onChange={(e) => setStartTime(e.target.value)}
-                            />
+                        {/* Start Date and Time */}
+                        <div className="space-y-2 relative">
+                            <Label>Start Date & Time</Label>
+                            <div className="flex gap-2">
+                                <Button
+                                    variant="outline"
+                                    className="flex-1 justify-start text-left font-normal"
+                                    onClick={() => setShowStartCalendar(!showStartCalendar)}
+                                >
+                                    <CalendarIcon className="mr-2 h-4 w-4" />
+                                    {startDate ? format(startDate, 'MMM dd, yyyy') : 'Pick a date'}
+                                </Button>
+                                <div className="w-32">
+                                    <TimePicker value={startTime} onChange={setStartTime} />
+                                </div>
+                            </div>
+                            {showStartCalendar && (
+                                <div ref={startCalendarRef} className="absolute z-50 top-full mt-2 p-3 border bg-background shadow-lg">
+                                    <Calendar
+                                        mode="single"
+                                        selected={startDate}
+                                        onSelect={(date) => {
+                                            setStartDate(date)
+                                            setShowStartCalendar(false)
+                                        }}
+                                    />
+                                </div>
+                            )}
                         </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="end-time">End Time</Label>
-                            <Input
-                                id="end-time"
-                                type="datetime-local"
-                                value={endTime}
-                                onChange={(e) => setEndTime(e.target.value)}
-                            />
+
+                        {/* End Date and Time */}
+                        <div className="space-y-2 relative">
+                            <Label>End Date & Time</Label>
+                            <div className="flex gap-2">
+                                <Button
+                                    variant="outline"
+                                    className="flex-1 justify-start text-left font-normal"
+                                    onClick={() => setShowEndCalendar(!showEndCalendar)}
+                                >
+                                    <CalendarIcon className="mr-2 h-4 w-4" />
+                                    {endDate ? format(endDate, 'MMM dd, yyyy') : 'Pick a date'}
+                                </Button>
+                                <div className="w-32">
+                                    <TimePicker value={endTime} onChange={setEndTime} />
+                                </div>
+                            </div>
+                            {showEndCalendar && (
+                                <div ref={endCalendarRef} className="absolute top-full mt-2 z-50 p-3 border bg-background shadow-lg">
+                                    <Calendar
+                                        mode="single"
+                                        selected={endDate}
+                                        onSelect={(date) => {
+                                            setEndDate(date)
+                                            setShowEndCalendar(false)
+                                        }}
+                                    />
+                                </div>
+                            )}
                         </div>
                     </CardContent>
                 </Card>
