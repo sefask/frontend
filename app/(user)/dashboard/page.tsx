@@ -1,6 +1,6 @@
 import { SectionCards } from '@/components/dashboard/section-cards'
 
-const page = () => {
+const page = async () => {
     return (
         <div className="flex flex-1 flex-col">
             <div>

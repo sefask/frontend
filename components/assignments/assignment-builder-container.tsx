@@ -5,6 +5,10 @@ import { AssignmentBuilder } from './assignment-builder'
 import { AssignmentBuilderHeader } from './assignment-builder-header'
 import React, { useState } from 'react'
 import { toast } from 'sonner'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
+import { Check, X } from 'lucide-react'
 
 export interface Question {
     id: string
@@ -19,7 +23,10 @@ const AssignmentBuilderContainer = () => {
     const [questions, setQuestions] = useState<Question[]>([])
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null)
     const [isSaving, setIsSaving] = useState(false)
-    const [assignmentTitle, setAssignmentTitle] = useState('Create Assignment')
+    const [assignmentTitle, setAssignmentTitle] = useState('')
+    const [assignmentDescription, setAssignmentDescription] = useState('')
+    const [isEditingDescription, setIsEditingDescription] = useState(false)
+    const [editDescValue, setEditDescValue] = useState('')
 
     const addQuestion = (afterIndex?: number) => {
         const newQuestion: Question = {
@@ -144,6 +151,66 @@ const AssignmentBuilderContainer = () => {
             />
             <SidebarProvider>
                 <SidebarInset className='h-[613px] overflow-y-auto scrolly'>
+                    {/* Description Section */}
+                    <div className="px-6 pt-6 pb-4">
+                        {isEditingDescription ? (
+                            <div className="relative mb-4">
+                                <Textarea
+                                    autoFocus
+                                    value={editDescValue}
+                                    onChange={(e) => setEditDescValue(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Escape') {
+                                            setIsEditingDescription(false)
+                                            setEditDescValue(assignmentDescription)
+                                        }
+                                    }}
+                                    placeholder="Add a description or instructions for your assignment... (optional)"
+                                    className="min-h-24 text-sm p-3 break-all"
+                                />
+                                <div className="absolute top-full mt-3 right-2 flex gap-2">
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={() => {
+                                            setIsEditingDescription(false)
+                                            setEditDescValue(assignmentDescription)
+                                        }}
+                                        className="h-8 w-8 p-0"
+                                    >
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        onClick={() => {
+                                            setIsEditingDescription(false)
+                                            setAssignmentDescription(editDescValue)
+                                        }}
+                                        className="h-8 w-8 p-0"
+                                    >
+                                        <Check className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div
+                                onClick={() => {
+                                    setIsEditingDescription(true)
+                                    setEditDescValue(assignmentDescription)
+                                }}
+                                className="hover:bg-muted p-3 cursor-text transition-colors"
+                            >
+                                {assignmentDescription ? (
+                                    <p className="text-sm text-foreground whitespace-pre-wrap">{assignmentDescription}</p>
+                                ) : (
+                                    <p className="text-sm text-muted-foreground italic">
+                                        Click to add a description or instructions for your assignment... (optional)
+                                    </p>
+                                )}
+                            </div>
+                        )}
+                    </div>
+
                     <AssignmentBuilder
                         questions={questions}
                         selectedQuestionId={selectedQuestionId}

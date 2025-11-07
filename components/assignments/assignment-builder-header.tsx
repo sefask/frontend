@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, Save } from 'lucide-react'
 import Link from 'next/link'
+import { Input } from '../ui/input'
 
 interface AssignmentBuilderHeaderProps {
     questionCount: number
@@ -18,7 +19,7 @@ export function AssignmentBuilderHeader({
     totalPoints,
     onSave,
     isSaving = false,
-    title = 'Create Assignment',
+    title = '',
     onTitleChange
 }: AssignmentBuilderHeaderProps) {
     const [isEditing, setIsEditing] = useState(false)
@@ -40,6 +41,7 @@ export function AssignmentBuilderHeader({
                     <div className="flex gap-3 items-center">
                         {isEditing ? (
                             <input
+                                className='p-1 h-max w-max outline-0 border-b border-foreground'
                                 autoFocus
                                 value={editValue}
                                 onChange={(e) => setEditValue(e.target.value)}
@@ -64,17 +66,16 @@ export function AssignmentBuilderHeader({
                                         setEditValue(title)
                                     }
                                 }}
-                                className="font-base border-0 bg-border/60 text-lg px-1 outline-0 ring-0"
                             />
                         ) : (
                             <h1
-                                className="text-lg font-semibold cursor-text hover:bg-muted/60 px-1 transition-colors"
+                                className="text-lg font-semibold cursor-text hover:bg-muted p-1 px-2 transition-colors"
                                 onClick={() => {
                                     setIsEditing(true)
                                     setEditValue(title)
                                 }}
                             >
-                                {title}
+                                {title || <span className="text-muted-foreground italic">Click to add title...</span>}
                             </h1>
                         )}
                         <p className="text-xs bg-foreground/15 p-1 px-2 text-muted-foreground">
