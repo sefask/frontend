@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { ChevronLeft, Save } from 'lucide-react'
+import { ChevronLeft, FileQuestionMark, Save, Settings } from 'lucide-react'
 import Link from 'next/link'
 import { Input } from '../ui/input'
 
@@ -12,6 +12,8 @@ interface AssignmentBuilderHeaderProps {
     isSaving?: boolean
     title?: string
     onTitleChange?: (title: string) => void
+    activeTab?: 'questions' | 'settings'
+    onTabChange?: (tab: 'questions' | 'settings') => void
 }
 
 export function AssignmentBuilderHeader({
@@ -20,7 +22,9 @@ export function AssignmentBuilderHeader({
     onSave,
     isSaving = false,
     title = '',
-    onTitleChange
+    onTitleChange,
+    activeTab = 'questions',
+    onTabChange
 }: AssignmentBuilderHeaderProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [editValue, setEditValue] = useState(title)
@@ -87,10 +91,11 @@ export function AssignmentBuilderHeader({
                 {/* Right side - Action buttons */}
                 <div className="flex items-center gap-2">
                     <Button
-                        variant="outline"
-                        asChild
+                        variant={activeTab === 'settings' ? 'outline' : 'ghost'}
+                        onClick={() => onTabChange?.(activeTab === 'settings' ? 'questions' : 'settings')}
                     >
-                        <Link href="/user/assignments">Cancel</Link>
+                        {activeTab !== 'settings' ? <Settings className="h-4 w-4" /> : <FileQuestionMark className="h-4 w-4" />}
+                        <span>{activeTab === 'settings' ? 'Questions' : 'Settings'}</span>
                     </Button>
                     <Button
                         onClick={onSave}

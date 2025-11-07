@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Check, X } from 'lucide-react'
+import { AssignmentSettings } from './assignment-settings'
 
 export interface Question {
     id: string
@@ -19,6 +20,8 @@ export interface Question {
     correctAnswer?: string | number
 }
 
+type TabType = 'questions' | 'settings'
+
 const AssignmentBuilderContainer = () => {
     const [questions, setQuestions] = useState<Question[]>([])
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null)
@@ -27,6 +30,7 @@ const AssignmentBuilderContainer = () => {
     const [assignmentDescription, setAssignmentDescription] = useState('')
     const [isEditingDescription, setIsEditingDescription] = useState(false)
     const [editDescValue, setEditDescValue] = useState('')
+    const [activeTab, setActiveTab] = useState<TabType>('questions')
 
     const addQuestion = (afterIndex?: number) => {
         const newQuestion: Question = {
@@ -148,85 +152,95 @@ const AssignmentBuilderContainer = () => {
                 isSaving={isSaving}
                 title={assignmentTitle}
                 onTitleChange={setAssignmentTitle}
+                activeTab={activeTab}
+                onTabChange={setActiveTab}
             />
             <SidebarProvider>
-                <SidebarInset className='h-[613px] overflow-y-auto scrolly'>
-                    {/* Description Section */}
-                    <div className="px-6 pt-6 pb-4">
-                        {isEditingDescription ? (
-                            <div className="relative mb-4">
-                                <Textarea
-                                    autoFocus
-                                    value={editDescValue}
-                                    onChange={(e) => setEditDescValue(e.target.value)}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Escape') {
-                                            setIsEditingDescription(false)
-                                            setEditDescValue(assignmentDescription)
-                                        }
-                                    }}
-                                    placeholder="Add a description or instructions for your assignment... (optional)"
-                                    className="min-h-24 text-sm p-3 break-all"
-                                />
-                                <div className="absolute top-full mt-3 right-2 flex gap-2">
-                                    <Button
-                                        size="sm"
-                                        variant="outline"
-                                        onClick={() => {
-                                            setIsEditingDescription(false)
-                                            setEditDescValue(assignmentDescription)
-                                        }}
-                                        className="h-8 w-8 p-0"
-                                    >
-                                        <X className="h-4 w-4" />
-                                    </Button>
-                                    <Button
-                                        size="sm"
-                                        onClick={() => {
-                                            setIsEditingDescription(false)
-                                            setAssignmentDescription(editDescValue)
-                                        }}
-                                        className="h-8 w-8 p-0"
-                                    >
-                                        <Check className="h-4 w-4" />
-                                    </Button>
-                                </div>
-                            </div>
-                        ) : (
-                            <div
-                                onClick={() => {
-                                    setIsEditingDescription(true)
-                                    setEditDescValue(assignmentDescription)
-                                }}
-                                className="hover:bg-muted p-3 cursor-text transition-colors"
-                            >
-                                {assignmentDescription ? (
-                                    <p className="text-sm text-foreground whitespace-pre-wrap">{assignmentDescription}</p>
+                <SidebarInset className='h-[613px] overflow-hidden'>
+                    {activeTab === 'questions' ? (
+                        <div className='h-full overflow-y-auto scrolly'>
+                            {/* Description Section */}
+                            <div className="px-6 pt-6 pb-4">
+                                {isEditingDescription ? (
+                                    <div className="relative mb-4">
+                                        <Textarea
+                                            autoFocus
+                                            value={editDescValue}
+                                            onChange={(e) => setEditDescValue(e.target.value)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Escape') {
+                                                    setIsEditingDescription(false)
+                                                    setEditDescValue(assignmentDescription)
+                                                }
+                                            }}
+                                            placeholder="Add a description or instructions for your assignment... (optional)"
+                                            className="min-h-24 text-sm p-3 break-all"
+                                        />
+                                        <div className="absolute top-full mt-3 right-2 flex gap-2">
+                                            <Button
+                                                size="sm"
+                                                variant="outline"
+                                                onClick={() => {
+                                                    setIsEditingDescription(false)
+                                                    setEditDescValue(assignmentDescription)
+                                                }}
+                                                className="h-8 w-8 p-0"
+                                            >
+                                                <X className="h-4 w-4" />
+                                            </Button>
+                                            <Button
+                                                size="sm"
+                                                onClick={() => {
+                                                    setIsEditingDescription(false)
+                                                    setAssignmentDescription(editDescValue)
+                                                }}
+                                                className="h-8 w-8 p-0"
+                                            >
+                                                <Check className="h-4 w-4" />
+                                            </Button>
+                                        </div>
+                                    </div>
                                 ) : (
-                                    <p className="text-sm text-muted-foreground italic">
-                                        Click to add a description or instructions for your assignment... (optional)
-                                    </p>
+                                    <div
+                                        onClick={() => {
+                                            setIsEditingDescription(true)
+                                            setEditDescValue(assignmentDescription)
+                                        }}
+                                        className="hover:bg-muted p-3 cursor-text transition-colors"
+                                    >
+                                        {assignmentDescription ? (
+                                            <p className="text-sm text-foreground whitespace-pre-wrap">{assignmentDescription}</p>
+                                        ) : (
+                                            <p className="text-sm text-muted-foreground italic">
+                                                Click to add a description or instructions for your assignment... (optional)
+                                            </p>
+                                        )}
+                                    </div>
                                 )}
                             </div>
-                        )}
-                    </div>
 
-                    <AssignmentBuilder
-                        questions={questions}
-                        selectedQuestionId={selectedQuestionId}
-                        onSelectQuestion={setSelectedQuestionId}
-                        onAddQuestion={addQuestion}
-                        onDeleteQuestion={deleteQuestion}
-                        onReorderQuestions={reorderQuestions}
-                    />
+                            <AssignmentBuilder
+                                questions={questions}
+                                selectedQuestionId={selectedQuestionId}
+                                onSelectQuestion={setSelectedQuestionId}
+                                onAddQuestion={addQuestion}
+                                onDeleteQuestion={deleteQuestion}
+                                onReorderQuestions={reorderQuestions}
+                            />
+                        </div>
+                    ) : (
+                        <AssignmentSettings title={assignmentTitle} />
+                    )}
                 </SidebarInset>
-                <SidebarRight
-                    className='w-96 h-[613px] overflow-y-auto'
-                    selectedQuestion={selectedQuestion}
-                    onUpdateQuestion={updateQuestion}
-                    onChangeQuestionType={changeQuestionType}
-                    onAddQuestion={addQuestion}
-                />
+                {activeTab === 'questions' && (
+                    <SidebarRight
+                        className='w-96 h-[613px] overflow-y-auto'
+                        selectedQuestion={selectedQuestion}
+                        onUpdateQuestion={updateQuestion}
+                        onChangeQuestionType={changeQuestionType}
+                        onAddQuestion={addQuestion}
+                    />
+                )}
             </SidebarProvider>
         </div>
     )
