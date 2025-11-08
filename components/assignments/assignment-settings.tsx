@@ -11,17 +11,34 @@ import { format } from 'date-fns'
 
 interface AssignmentSettingsProps {
     title?: string
+    assignmentType: 'simple' | 'live'
+    onTypeChange: (type: 'simple' | 'live') => void
+    startDate: Date | undefined
+    onStartDateChange: (date: Date | undefined) => void
+    startTime: string
+    onStartTimeChange: (time: string) => void
+    endDate: Date | undefined
+    onEndDateChange: (date: Date | undefined) => void
+    endTime: string
+    onEndTimeChange: (time: string) => void
 }
 
-export function AssignmentSettings({ title = 'Untitled' }: AssignmentSettingsProps) {
-    const [assignmentType, setAssignmentType] = useState<'simple' | 'live'>('simple')
+export function AssignmentSettings({
+    title = 'Untitled',
+    assignmentType,
+    onTypeChange,
+    startDate,
+    onStartDateChange,
+    startTime,
+    onStartTimeChange,
+    endDate,
+    onEndDateChange,
+    endTime,
+    onEndTimeChange
+}: AssignmentSettingsProps) {
     const [isProctored, setIsProctored] = useState(false)
     const [requireCamera, setRequireCamera] = useState(false)
     const [preventTabSwitch, setPreventTabSwitch] = useState(false)
-    const [startDate, setStartDate] = useState<Date | undefined>()
-    const [startTime, setStartTime] = useState('')
-    const [endDate, setEndDate] = useState<Date | undefined>()
-    const [endTime, setEndTime] = useState('')
     const [shuffleQuestions, setShuffleQuestions] = useState(false)
     const [showResults, setShowResults] = useState(true)
     const [showStartCalendar, setShowStartCalendar] = useState(false)
@@ -87,11 +104,11 @@ export function AssignmentSettings({ title = 'Untitled' }: AssignmentSettingsPro
                     <CardDescription>Choose how your assignment will be delivered</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <RadioGroup value={assignmentType} onValueChange={(value: 'simple' | 'live') => setAssignmentType(value)}>
+                    <RadioGroup value={assignmentType} onValueChange={(value: 'simple' | 'live') => onTypeChange(value)}>
                         <div className="grid grid-cols-2 gap-3">
                             {/* Simple Assignment Card */}
                             <div
-                                onClick={() => setAssignmentType('simple')}
+                                onClick={() => onTypeChange('simple')}
                                 className={`p-4 border cursor-pointer transition-all ${assignmentType === 'simple'
                                     ? 'border-foreground bg-muted'
                                     : 'border-muted hover:border-foreground/50'
@@ -108,7 +125,7 @@ export function AssignmentSettings({ title = 'Untitled' }: AssignmentSettingsPro
 
                             {/* Live Assignment Card */}
                             <div
-                                onClick={() => setAssignmentType('live')}
+                                onClick={() => onTypeChange('live')}
                                 className={`p-4 border cursor-pointer transition-all ${assignmentType === 'live'
                                     ? 'border-foreground bg-muted'
                                     : 'border-muted hover:border-foreground/50'
@@ -148,7 +165,7 @@ export function AssignmentSettings({ title = 'Untitled' }: AssignmentSettingsPro
                                     {startDate ? format(startDate, 'MMM dd, yyyy') : 'Pick a date'}
                                 </Button>
                                 <div className="w-32">
-                                    <TimePicker value={startTime} onChange={setStartTime} />
+                                    <TimePicker value={startTime} onChange={onStartTimeChange} />
                                 </div>
                             </div>
                             {showStartCalendar && (
@@ -157,7 +174,7 @@ export function AssignmentSettings({ title = 'Untitled' }: AssignmentSettingsPro
                                         mode="single"
                                         selected={startDate}
                                         onSelect={(date) => {
-                                            setStartDate(date)
+                                            onStartDateChange(date)
                                             setShowStartCalendar(false)
                                         }}
                                     />
@@ -178,7 +195,7 @@ export function AssignmentSettings({ title = 'Untitled' }: AssignmentSettingsPro
                                     {endDate ? format(endDate, 'MMM dd, yyyy') : 'Pick a date'}
                                 </Button>
                                 <div className="w-32">
-                                    <TimePicker value={endTime} onChange={setEndTime} />
+                                    <TimePicker value={endTime} onChange={onEndTimeChange} />
                                 </div>
                             </div>
                             {showEndCalendar && (
@@ -187,7 +204,7 @@ export function AssignmentSettings({ title = 'Untitled' }: AssignmentSettingsPro
                                         mode="single"
                                         selected={endDate}
                                         onSelect={(date) => {
-                                            setEndDate(date)
+                                            onEndDateChange(date)
                                             setShowEndCalendar(false)
                                         }}
                                     />

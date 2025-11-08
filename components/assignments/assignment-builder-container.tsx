@@ -7,8 +7,9 @@ import React, { useState } from 'react'
 import { toast } from 'sonner'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
-import { Check, X } from 'lucide-react'
+import { Check, Router, X } from 'lucide-react'
 import { AssignmentSettings } from './assignment-settings'
+import { useRouter } from 'next/navigation'
 
 export interface Question {
     id: string
@@ -21,6 +22,15 @@ export interface Question {
 
 type TabType = 'questions' | 'settings'
 
+interface AssignmentData {
+    title: string
+    description: string
+    type: 'simple' | 'live'
+    questions: Omit<Question, 'id'>[]
+    startTime?: string
+    endTime?: string
+}
+
 const AssignmentBuilderContainer = () => {
     const [questions, setQuestions] = useState<Question[]>([])
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null)
@@ -30,6 +40,14 @@ const AssignmentBuilderContainer = () => {
     const [isEditingDescription, setIsEditingDescription] = useState(false)
     const [editDescValue, setEditDescValue] = useState('')
     const [activeTab, setActiveTab] = useState<TabType>('questions')
+    const router = useRouter();
+
+    // Settings state
+    const [assignmentType, setAssignmentType] = useState<'simple' | 'live'>('simple')
+    const [startDate, setStartDate] = useState<Date | undefined>()
+    const [startTime, setStartTime] = useState('')
+    const [endDate, setEndDate] = useState<Date | undefined>()
+    const [endTime, setEndTime] = useState('')
 
     const addQuestion = (afterIndex?: number) => {
         const newQuestion: Question = {
@@ -115,6 +133,25 @@ const AssignmentBuilderContainer = () => {
                 return
             }
 
+            // Validate question details
+            const questionErrors: string[] = []
+            questions.forEach((q, index) => {
+                if (!q.text.trim()) {
+                    questionErrors.push(`Question ${index + 1}: Missing question text`)
+                }
+                if (q.type === 'multiple-choice' && (!q.options || q.options.filter(o => o.trim()).length < 2)) {
+                    questionErrors.push(`Question ${index + 1}: Multiple choice needs at least 2 options`)
+                }
+                if (q.type === 'short-answer' && !q.correctAnswer) {
+                    questionErrors.push(`Question ${index + 1}: Missing correct answer`)
+                }
+            })
+
+            if (questionErrors.length > 0) {
+                questionErrors.forEach(err => toast.error(err))
+                return
+            }
+
             // Map frontend questions to backend format (remove temporary ids)
             const questionsForBackend = questions.map(q => ({
                 type: q.type,
@@ -124,17 +161,84 @@ const AssignmentBuilderContainer = () => {
                 correctAnswer: q.correctAnswer
             }))
 
-            // For now, just log the data
-            // TODO: Replace with actual API call
-            console.log('Saving assignment:', {
-                questions: questionsForBackend,
-                totalPoints: questions.reduce((sum, q) => sum + q.points, 0)
+            // Prepare the assignment data
+            const assignmentData: AssignmentData = {
+                title: assignmentTitle || 'Untitled Assignment',
+                description: assignmentDescription || 'No description provided',
+                type: assignmentType,
+                questions: questionsForBackend
+            }
+
+            // Add time fields if live assignment
+            if (assignmentType === 'live') {
+                if (!startDate || !startTime) {
+                    toast.error('Start date and time are required for live assignments')
+                    return
+                }
+                if (!endDate || !endTime) {
+                    toast.error('End date and time are required for live assignments')
+                    return
+                }
+
+                // Combine date and time
+                const [startHours, startMinutes] = startTime.split(':')
+                const [endHours, endMinutes] = endTime.split(':')
+
+                const startDateTime = new Date(startDate)
+                startDateTime.setHours(parseInt(startHours), parseInt(startMinutes))
+
+                const endDateTime = new Date(endDate)
+                endDateTime.setHours(parseInt(endHours), parseInt(endMinutes))
+
+                assignmentData.startTime = startDateTime.toISOString()
+                assignmentData.endTime = endDateTime.toISOString()
+            }
+
+            // Make API call to save assignment
+            const response = await fetch('/api/assignments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(assignmentData)
             })
 
+            const result = await response.json()
+
+            if (!response.ok) {
+                // Show all validation errors
+                if (result.errors) {
+                    if (typeof result.errors === 'object' && !Array.isArray(result.errors)) {
+                        // Object of errors (field-level)
+                        Object.entries(result.errors).forEach(([field, message]) => {
+                            if (message) {
+                                toast.error(`${field}: ${message}`)
+                            }
+                        })
+                    } else if (Array.isArray(result.errors)) {
+                        // Array of errors (questions)
+                        result.errors.forEach((err: { index?: number; errors?: Record<string, string> }) => {
+                            if (typeof err.index === 'number' && err.errors) {
+                                Object.entries(err.errors).forEach(([field, message]) => {
+                                    if (message) {
+                                        toast.error(`Question ${err.index! + 1} - ${field}: ${message}`)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                } else {
+                    toast.error(result.message || 'Failed to save assignment')
+                }
+                return
+            }
+
             toast.success('Assignment saved successfully!')
+            router.push('/assignments')
+            console.log('Assignment saved:', result)
         } catch (error) {
             console.error('Error saving assignment:', error)
-            toast.error('Failed to save assignment')
+            toast.error(error instanceof Error ? error.message : 'Failed to save assignment')
         } finally {
             setIsSaving(false)
         }
@@ -228,7 +332,19 @@ const AssignmentBuilderContainer = () => {
                             />
                         </div>
                     ) : (
-                        <AssignmentSettings title={assignmentTitle} />
+                        <AssignmentSettings
+                            title={assignmentTitle}
+                            assignmentType={assignmentType}
+                            onTypeChange={setAssignmentType}
+                            startDate={startDate}
+                            onStartDateChange={setStartDate}
+                            startTime={startTime}
+                            onStartTimeChange={setStartTime}
+                            endDate={endDate}
+                            onEndDateChange={setEndDate}
+                            endTime={endTime}
+                            onEndTimeChange={setEndTime}
+                        />
                     )}
                 </SidebarInset>
                 {activeTab === 'questions' && (

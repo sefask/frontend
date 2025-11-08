@@ -18,7 +18,7 @@ export const useOTP = (email?: string, code?: string) => {
 
         if (verify) {
             toast.success("Successfully verified email!");
-            navigator.push("/user/dashboard");
+            navigator.push("/dashboard");
         }
     }
 
