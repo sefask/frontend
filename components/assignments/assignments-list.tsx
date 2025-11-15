@@ -3,11 +3,14 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { LayoutGrid, List, Trash2, Edit2 } from 'lucide-react'
+import logoLight from '@/public/img/logo-light.svg'
+import logoDark from '@/public/img/logo-dark.svg'
+import { LayoutGrid, List, Trash2, Edit2, Loader } from 'lucide-react'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import useFetch from '@/utils/useFetch'
+import Image from 'next/image'
+import { useTheme } from 'next-themes'
 
 interface Assignment {
     _id: string
@@ -27,9 +30,15 @@ export function AssignmentsList() {
     const [assignments, setAssignments] = useState<Assignment[]>([])
     const [layoutMode, setLayoutMode] = useState<LayoutMode>('grid')
     const { data, loading, errors, fetchData } = useFetch()
+    const { theme } = useTheme()
+    const [mounted, setMounted] = useState(false)
+
+    // Pick logo — default to light before mount
+    const logo = theme === 'dark' ? logoLight : logoDark
 
     useEffect(() => {
         fetchAssignments()
+        setMounted(true)
     }, [])
 
     const fetchAssignments = async () => {
@@ -72,9 +81,11 @@ export function AssignmentsList() {
 
     if (loading) {
         return (
-            <div className="flex flex-col items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
-                <p className="text-muted-foreground">Loading assignments...</p>
+            <div className="inset-0 h-96 flex items-center justify-center bg-background">
+                <div className="flex flex-col items-center text-muted-foreground gap-4">
+                    <Image src={logo} alt="Sefask Logo" className="size-20" />
+                    <Loader className="size-4 animate-spin" />
+                </div>
             </div>
         )
     }
