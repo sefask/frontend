@@ -1,5 +1,3 @@
-"use client"
-
 import { AssignmentsList } from '@/components/assignments/assignments-list'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
