@@ -13,7 +13,7 @@ export default function Loading() {
   useEffect(() => setMounted(true), [])
 
   // Pick logo — default to light before mount
-  const logo = theme === 'dark' ? logoDark : logoLight
+  const logo = theme === 'dark' ? logoLight : logoDark
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-background">
